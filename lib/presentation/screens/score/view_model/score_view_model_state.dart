@@ -6,6 +6,7 @@ class ScoreViewModelState {
   final int dateTime;
   final bool isLoading;
   final bool isError;
+  final bool isScoreSaved;
 
   ScoreViewModelState({
     this.difficulty = '',
@@ -15,6 +16,7 @@ class ScoreViewModelState {
     this.dateTime = 0,
     this.isLoading = false,
     this.isError = false,
+    this.isScoreSaved = false,
   });
 
   ScoreViewModelState copyWith({
@@ -25,6 +27,7 @@ class ScoreViewModelState {
     int? dateTime,
     bool? isLoading,
     bool? isError,
+    bool? isScoreSaved,
   }) {
     return ScoreViewModelState(
       difficulty: difficulty ?? this.difficulty,
@@ -34,6 +37,7 @@ class ScoreViewModelState {
       dateTime: dateTime ?? this.dateTime,
       isLoading: isLoading ?? this.isLoading,
       isError: isError ?? this.isError,
+      isScoreSaved: isScoreSaved ?? this.isScoreSaved,
     );
   }
 }

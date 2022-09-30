@@ -10,10 +10,10 @@ class QuizViewModel extends ChangeNotifier {
 
   QuizViewModel({required QuizRepository quizRepository})
       : _quizRepository = quizRepository {
-    _init();
+    init();
   }
 
-  void _init() {
+  void init() {
     final quiz = _quizRepository.quiz;
     final index = quiz.currentQuestionIndex;
     _state = _state.copyWith(

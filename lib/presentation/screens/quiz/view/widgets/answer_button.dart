@@ -1,10 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz_app/presentation/routes/routes.dart';
 import 'package:quiz_app/presentation/screens/quiz/view_model/quiz_view_model.dart';
+import 'package:quiz_app/presentation/screens/score/view_model/score_view_model.dart';
 
 class AnswerButton extends StatelessWidget {
   final int index;
@@ -38,6 +37,7 @@ class AnswerButton extends StatelessWidget {
           viewModel.setUserAnswer(index);
           final result = viewModel.nextQuestion();
           if (!result) {
+            context.read<ScoreViewModel>().init();
             Navigator.of(context).pushReplacementNamed(Routes.score);
           }
         },

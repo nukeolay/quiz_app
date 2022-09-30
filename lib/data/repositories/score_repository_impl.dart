@@ -6,7 +6,7 @@ class ScoreRepositoryImpl implements ScoreRepository {
 
   const ScoreRepositoryImpl({required this.scoreStorage});
   @override
-  Future<bool> saveScore({
+  Future<void> saveScore({
     required DateTime date,
     required String category,
     required String difficulty,

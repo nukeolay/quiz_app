@@ -1,11 +1,10 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import 'package:quiz_app/common/exceptions.dart';
 
 abstract class ScoreStorage {
-  Future<bool> saveScore({
+  Future<void> saveScore({
     required DateTime date,
     required String category,
     required String difficulty,
@@ -18,7 +17,7 @@ class ScoreStorageImpl implements ScoreStorage {
   const ScoreStorageImpl();
 
   @override
-  Future<bool> saveScore({
+  Future<void> saveScore({
     required DateTime date,
     required String category,
     required String difficulty,
@@ -30,7 +29,6 @@ class ScoreStorageImpl implements ScoreStorage {
       host: 'quizapp-cc0b6-default-rtdb.firebaseio.com',
       path: 'scores.json',
     );
-
     try {
       final response = await http.post(uri,
           body: jsonEncode({
@@ -40,9 +38,7 @@ class ScoreStorageImpl implements ScoreStorage {
             'correctAnswers': correctAnswers,
             'wrongAnswers': wrongAnswers,
           }));
-      if (response.statusCode == 200) {
-        return true;
-      } else {
+      if (response.statusCode != 200) {
         throw ServerException();
       }
     } catch (error) {

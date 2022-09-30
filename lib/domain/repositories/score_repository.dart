@@ -1,5 +1,5 @@
 abstract class ScoreRepository {
-  Future<bool> saveScore({
+  Future<void> saveScore({
     required DateTime date,
     required String category,
     required String difficulty,

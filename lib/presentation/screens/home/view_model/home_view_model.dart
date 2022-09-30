@@ -46,6 +46,8 @@ class HomeViewModel extends ChangeNotifier {
       category: category,
       difficulty: difficulty,
     );
+    _state = _state.copyWith(isLoading: false);
+    notifyListeners();
     _quizRepository.setQuiz(
       Quiz(
         category: category,
@@ -57,7 +59,7 @@ class HomeViewModel extends ChangeNotifier {
     );
   }
 
-  void startError() {
+  void showError() {
     _state = _state.copyWith(isError: true);
     notifyListeners();
     Future.delayed(const Duration(seconds: 1)).then((_) {

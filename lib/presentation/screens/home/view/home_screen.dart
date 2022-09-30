@@ -3,7 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:quiz_app/presentation/routes/routes.dart';
 import 'package:quiz_app/presentation/screens/home/view/widgets/category_drop_down.dart';
 import 'package:quiz_app/presentation/screens/home/view/widgets/difficulty_drop_down.dart';
+import 'package:quiz_app/presentation/common/error_message.dart';
 import 'package:quiz_app/presentation/screens/home/view_model/home_view_model.dart';
+import 'package:quiz_app/presentation/screens/quiz/view_model/quiz_view_model.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -45,9 +47,14 @@ class HomeScreen extends StatelessWidget {
                   onPressed: () {
                     viewModel
                         .start()
+                        .then((_) {
+                          context.read<QuizViewModel>().init();
+                        })
                         .then((_) => Navigator.of(context)
                             .pushReplacementNamed(Routes.quiz))
-                        .onError((error, stackTrace) => viewModel.startError());
+                        .onError(
+                          (_, __) => viewModel.showError(),
+                        );
                   },
                   child: const Text('START'),
                 ),
@@ -57,13 +64,7 @@ class HomeScreen extends StatelessWidget {
               const Center(
                 child: CircularProgressIndicator(),
               ),
-            if (state.isError)
-              const Center(
-                  child: Icon(
-                Icons.error,
-                size: 90,
-                color: Colors.red,
-              )),
+            if (state.isError) const ErrorMessage(),
           ],
         ),
       ),

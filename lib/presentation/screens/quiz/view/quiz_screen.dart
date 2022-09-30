@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quiz_app/presentation/routes/routes.dart';
 import 'package:quiz_app/presentation/screens/quiz/view/widgets/answer_button.dart';
 import 'package:quiz_app/presentation/screens/quiz/view/widgets/question_label.dart';
 import 'package:quiz_app/presentation/screens/quiz/view_model/quiz_view_model.dart';

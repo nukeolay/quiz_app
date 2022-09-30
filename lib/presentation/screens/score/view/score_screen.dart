@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:quiz_app/presentation/common/error_message.dart';
 import 'package:quiz_app/presentation/routes/routes.dart';
 import 'package:quiz_app/presentation/screens/score/view/widgets/result_text.dart';
+import 'package:quiz_app/presentation/screens/score/view/widgets/score_saved_message.dart';
 import 'package:quiz_app/presentation/screens/score/view_model/score_view_model.dart';
 
 class ScoreScreen extends StatelessWidget {
@@ -56,23 +58,28 @@ class ScoreScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(20.0),
                   child: ElevatedButton(
                     onPressed: () {
-                      viewModel.saveScore().then((_) =>
-                          Future.delayed(const Duration(seconds: 1)).then((_) =>
-                              Navigator.of(context)
-                                  .pushReplacementNamed(Routes.home)));
+                      viewModel
+                          .saveScore()
+                          // .then((_) {
+                          //   context.read<QuizViewModel>().clear();
+                          // })
+                          .then((_) => Navigator.of(context)
+                              .pushReplacementNamed(Routes.home))
+                          .onError(
+                            (_, __) => viewModel.showError(),
+                          );
                     },
                     child: const Text('SAVE SCORE'),
                   ),
                 ),
               ],
             ),
-            if (state.isError)
+            if (state.isLoading && !state.isError)
               const Center(
-                  child: Icon(
-                Icons.error,
-                size: 90,
-                color: Colors.red,
-              )),
+                child: CircularProgressIndicator(),
+              ),
+            if (state.isError) const ErrorMessage(),
+            if (state.isScoreSaved) const ScoreSavedMessage(),
           ],
         ),
       ),
