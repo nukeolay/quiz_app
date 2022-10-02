@@ -7,6 +7,7 @@ import 'package:quiz_app/data/repositories/score_repository_impl.dart';
 import 'package:quiz_app/domain/repositories/questions_repository.dart';
 import 'package:quiz_app/domain/repositories/quiz_repository.dart';
 import 'package:quiz_app/domain/repositories/score_repository.dart';
+import 'package:quiz_app/presentation/routes/custom_page_transition_builder.dart';
 import 'package:quiz_app/presentation/routes/routes.dart';
 import 'package:quiz_app/presentation/screens/home/view/home_screen.dart';
 import 'package:quiz_app/presentation/screens/home/view_model/home_view_model.dart';
@@ -50,9 +51,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Quiz App',
       theme: ThemeData.dark().copyWith(
-          colorScheme: ColorScheme.fromSeed(
-        seedColor: Colors.indigo,
-      )),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.indigo,
+        ),
+        pageTransitionsTheme: const PageTransitionsTheme(builders: {
+          TargetPlatform.android: CustomPageTransitionBuilder(),
+          TargetPlatform.iOS: CustomPageTransitionBuilder(),
+        }),
+      ),
       home: const HomeScreen(),
       onGenerateRoute: Routes.onGenerateRoute,
       debugShowCheckedModeBanner: false,

@@ -37,13 +37,15 @@ class QuizViewModel extends ChangeNotifier {
         quiz.questions[index].answers.answers.length, (index) => false);
     updatedUserAnswers[answerIndex] = true;
     _state = _state.copyWith(userAnswers: updatedUserAnswers);
-    notifyListeners();
   }
 
-  bool nextQuestion() {
+  bool get hasNextQuestion {
     final userAnswers = _state.userAnswers;
     final question = _quizRepository.nextQuestion(userAnswers);
-    if (question != null) {
+    return question != null ? true : false;
+  }
+
+  void nextQuestion() {
       final quiz = _quizRepository.quiz;
       final index = quiz.currentQuestionIndex;
       _state = _state.copyWith(
@@ -58,10 +60,5 @@ class QuizViewModel extends ChangeNotifier {
         isMultipleCorrectAnswers:
             quiz.questions[index].isMultipleCorrectAnswers,
       );
-      notifyListeners();
-      return true;
-    }
-    notifyListeners();
-    return false;
   }
 }

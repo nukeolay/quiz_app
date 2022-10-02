@@ -35,8 +35,11 @@ class AnswerButton extends StatelessWidget {
         onTap: () {
           HapticFeedback.mediumImpact();
           viewModel.setUserAnswer(index);
-          final result = viewModel.nextQuestion();
-          if (!result) {
+          final hasNextQuestion = viewModel.hasNextQuestion;
+          if (hasNextQuestion) {
+            viewModel.nextQuestion();
+            Navigator.of(context).pushReplacementNamed(Routes.quiz);
+          } else {
             context.read<ScoreViewModel>().init();
             Navigator.of(context).pushReplacementNamed(Routes.score);
           }
